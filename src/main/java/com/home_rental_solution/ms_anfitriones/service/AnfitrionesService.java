@@ -2,73 +2,76 @@ package com.home_rental_solution.ms_anfitriones.service;
 
 import com.home_rental_solution.ms_anfitriones.model.Anfitriones;
 import com.home_rental_solution.ms_anfitriones.repository.AnfitrionesRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class AnfitrionesService {
 
-    @Autowired
-    private AnfitrionesRepository anfitrionesRepository;
+    private final AnfitrionesRepository anfitrionesRepository;
+
     //***CRUD***
     //GET /anfitriones
     public List<Anfitriones> mostrarAnfitriones(){
-        return anfitrionesRepository.obtenerAnfitriones();
+        return anfitrionesRepository.findAll();
     }
 
     //GET /anfitriones/id
     public Anfitriones mostrarPorId(int idAnfitrion){
-        return anfitrionesRepository.buscarPorId(idAnfitrion);
+        return anfitrionesRepository.findById(idAnfitrion).orElse(null);
     }
 
     //POST /anfitrion
     public Anfitriones save (Anfitriones nuevoAnfitrion) throws Exception{
-        if (anfitrionesRepository.buscarPorEmail(nuevoAnfitrion.getEmail()) != null){
+        if (anfitrionesRepository.findByEmailIgnoreCase(nuevoAnfitrion.getEmail()) != null){
             throw new Exception("El email ya esta registrado");
         }
-        return anfitrionesRepository.guardar(nuevoAnfitrion);
+        return anfitrionesRepository.save(nuevoAnfitrion);
     }
 
     //PUT /anfitriones/id
     public Anfitriones editar(int idAnfitrion, Anfitriones anfitrionEditado) throws Exception{
-        Anfitriones anfitrionExistente = anfitrionesRepository.buscarPorId(idAnfitrion);
+        Anfitriones anfitrionExistente = anfitrionesRepository.findById(idAnfitrion).orElse(null);
         if (anfitrionExistente == null){
-            throw new Exception("El anfitrion con Id " + idAnfitrion + " no existe");
+            throw new Exception("El anfitrion con ID: " + idAnfitrion + " no existe");
         }
-        Anfitriones anfitrionEmail = anfitrionesRepository.buscarPorEmail(anfitrionEditado.getEmail());
+        Anfitriones anfitrionEmail = anfitrionesRepository.findByEmailIgnoreCase(anfitrionEditado.getEmail());
         if (anfitrionEmail != null && !anfitrionEmail.getIdAnfitrion().equals(idAnfitrion)){
             throw new Exception("El email ya esta registrado por otro anfitrion");
         }
         anfitrionEditado.setIdAnfitrion(idAnfitrion);
-        return anfitrionesRepository.actualizar(anfitrionEditado);
+        anfitrionEditado.setVerificado(anfitrionExistente.isVerificado());
+        return anfitrionesRepository.save(anfitrionEditado);
     }
 
     //DELETE /anfitriones/id
     public void borrar(int idAnfitrion) throws Exception{
-        if (anfitrionesRepository.buscarPorId(idAnfitrion) == null){
-            throw new Exception("El anfitrion con ID " + idAnfitrion + " no existe");
+        if (!anfitrionesRepository.existsById(idAnfitrion)){
+            throw new Exception("El anfitrion con ID: " + idAnfitrion + " no existe");
         }
-        anfitrionesRepository.eliminar(idAnfitrion);
+        anfitrionesRepository.deleteById(idAnfitrion);
     }
 
     //***EXTRAS***
     //GET /anfitriones/id/validar
     public boolean validar(int idAnfitrion) throws Exception{
-        Anfitriones anfitrion = anfitrionesRepository.buscarPorId(idAnfitrion);
+        Anfitriones anfitrion = anfitrionesRepository.findById(idAnfitrion).orElse(null);
         if (anfitrion == null){
-            throw new Exception("El anfitrion con ID " + idAnfitrion + " no existe");
+            throw new Exception("El anfitrion con ID: " + idAnfitrion + " no existe");
         }
-        return anfitrionesRepository.estaVerificado(idAnfitrion);
+        return anfitrionesRepository.existsByIdAnfitrionAndVerificadoTrue(idAnfitrion);
     }
 
     //PUT /anfitriones/id/verificar
     public Anfitriones verificar(int idAnfitrion) throws Exception{
-        Anfitriones anfitrion = anfitrionesRepository.buscarPorId(idAnfitrion);
+        Anfitriones anfitrion = anfitrionesRepository.findById(idAnfitrion).orElse(null);
         if (anfitrion == null){
-            throw new Exception("El anfitrion con ID " + idAnfitrion + " no existe");
+            throw new Exception("El anfitrion con ID: " + idAnfitrion + " no existe");
         }
-        return anfitrionesRepository.verificar(idAnfitrion);
+        anfitrion.setVerificado(true);
+        return anfitrionesRepository.save(anfitrion);
     }
 }

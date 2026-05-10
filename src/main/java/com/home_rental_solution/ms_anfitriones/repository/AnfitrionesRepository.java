@@ -9,7 +9,7 @@ public interface AnfitrionesRepository extends JpaRepository<Anfitriones, Intege
 
     //***EXTRAS***
     //buscar por email
-    Anfitriones findByEmailContainingIgnoreCase(String email);
+    Anfitriones findByEmailIgnoreCase(String email);
 
     //validar si esta verificado
     boolean existsByIdAnfitrionAndVerificadoTrue(Integer idAnfitrion);
