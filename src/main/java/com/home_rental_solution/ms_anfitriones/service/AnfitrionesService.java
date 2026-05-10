@@ -12,7 +12,6 @@ public class AnfitrionesService {
 
     @Autowired
     private AnfitrionesRepository anfitrionesRepository;
-
     //***CRUD***
     //GET /anfitriones
     public List<Anfitriones> mostrarAnfitriones(){
