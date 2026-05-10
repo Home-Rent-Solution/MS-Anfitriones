@@ -3,7 +3,7 @@ package com.home_rental_solution.ms_anfitriones.controller;
 import com.home_rental_solution.ms_anfitriones.model.Anfitriones;
 import com.home_rental_solution.ms_anfitriones.service.AnfitrionesService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -16,10 +16,10 @@ import java.util.HashMap;
 
 @RestController
 @RequestMapping("/api/v1/anfitriones")
+@RequiredArgsConstructor
 public class AnfitrionesController {
 
-    @Autowired
-    private AnfitrionesService anfitrionesService;
+    private final AnfitrionesService anfitrionesService;
 
     //***CRUD***
     //GET /api/v1/anfitriones
@@ -33,7 +33,7 @@ public class AnfitrionesController {
     public ResponseEntity<?> getPorId(@PathVariable int idAnfitrion){
         Anfitriones anfitrion = anfitrionesService.mostrarPorId(idAnfitrion);
         if (anfitrion == null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El anfitrion con ID " + idAnfitrion + " no existe");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El anfitrion con ID: " + idAnfitrion + " no existe");
         }
         return ResponseEntity.ok(anfitrion);
     }
@@ -97,7 +97,7 @@ public class AnfitrionesController {
     //GET /api/v1/anfitriones/id/propiedades
     @GetMapping("{idAnfitrion}/propiedades")
     public ResponseEntity<?> getPropiedades(@PathVariable int idAnfitrion){
-        return ResponseEntity.ok("Endpoint pendiente");
+        return ResponseEntity.ok("Endpoint pendiente de integracion con ms-propiedades");
     }
 
     //Manejo de errores de validacion
