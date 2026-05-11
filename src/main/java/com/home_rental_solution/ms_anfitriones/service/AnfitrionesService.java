@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +27,7 @@ public class AnfitrionesService {
 
     //POST /anfitrion
     public Anfitriones save (Anfitriones nuevoAnfitrion) throws Exception{
-        if (anfitrionesRepository.findByEmailIgnoreCase(nuevoAnfitrion.getEmail()) != null){
+        if (anfitrionesRepository.existsByEmailIgnoreCase(nuevoAnfitrion.getEmail())){
             throw new Exception("El email ya esta registrado");
         }
         return anfitrionesRepository.save(nuevoAnfitrion);
@@ -34,12 +35,11 @@ public class AnfitrionesService {
 
     //PUT /anfitriones/id
     public Anfitriones editar(int idAnfitrion, Anfitriones anfitrionEditado) throws Exception{
-        Anfitriones anfitrionExistente = anfitrionesRepository.findById(idAnfitrion).orElse(null);
-        if (anfitrionExistente == null){
-            throw new Exception("El anfitrion con ID: " + idAnfitrion + " no existe");
-        }
-        Anfitriones anfitrionEmail = anfitrionesRepository.findByEmailIgnoreCase(anfitrionEditado.getEmail());
-        if (anfitrionEmail != null && !anfitrionEmail.getIdAnfitrion().equals(idAnfitrion)){
+        Anfitriones anfitrionExistente = anfitrionesRepository.findById(idAnfitrion).orElseThrow(() -> new Exception(
+                "El Anfitrion con ID: " + idAnfitrion + " no existe"
+        ));
+        Optional<Anfitriones> anfitrionEmail = anfitrionesRepository.findByEmailIgnoreCase(anfitrionEditado.getEmail());
+        if (anfitrionEmail.isPresent() && !anfitrionEmail.get().getIdAnfitrion().equals(idAnfitrion)){
             throw new Exception("El email ya esta registrado por otro anfitrion");
         }
         anfitrionEditado.setIdAnfitrion(idAnfitrion);
@@ -58,8 +58,7 @@ public class AnfitrionesService {
     //***EXTRAS***
     //GET /anfitriones/id/validar
     public boolean validar(int idAnfitrion) throws Exception{
-        Anfitriones anfitrion = anfitrionesRepository.findById(idAnfitrion).orElse(null);
-        if (anfitrion == null){
+        if (!anfitrionesRepository.existsById(idAnfitrion)){
             throw new Exception("El anfitrion con ID: " + idAnfitrion + " no existe");
         }
         return anfitrionesRepository.existsByIdAnfitrionAndVerificadoTrue(idAnfitrion);
@@ -67,10 +66,9 @@ public class AnfitrionesService {
 
     //PUT /anfitriones/id/verificar
     public Anfitriones verificar(int idAnfitrion) throws Exception{
-        Anfitriones anfitrion = anfitrionesRepository.findById(idAnfitrion).orElse(null);
-        if (anfitrion == null){
-            throw new Exception("El anfitrion con ID: " + idAnfitrion + " no existe");
-        }
+        Anfitriones anfitrion = anfitrionesRepository.findById(idAnfitrion).orElseThrow(() -> new Exception("El anfitrion" +
+                "con ID: " + idAnfitrion + " no existe"));
+
         anfitrion.setVerificado(true);
         return anfitrionesRepository.save(anfitrion);
     }
