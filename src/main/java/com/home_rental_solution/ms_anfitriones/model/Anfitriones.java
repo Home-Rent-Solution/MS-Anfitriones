@@ -36,5 +36,5 @@ public class Anfitriones {
     private String telefono;
 
     @Column(nullable = false)
-    private boolean verificado;
+    private boolean verificado = false;
 }
