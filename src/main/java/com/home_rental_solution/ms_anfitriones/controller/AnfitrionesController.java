@@ -56,7 +56,11 @@ public class AnfitrionesController {
             Anfitriones anfitrionActualizado = anfitrionesService.editar(idAnfitrion, anfitrionEditado);
             return ResponseEntity.ok(anfitrionActualizado);
         } catch (Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            String msg = e.getMessage();
+            if (msg != null && msg.contains("email")){
+                return ResponseEntity.badRequest().body(msg);
+            }
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(msg);
         }
     }
 
