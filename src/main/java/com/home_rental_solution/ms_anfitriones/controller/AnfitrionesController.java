@@ -1,5 +1,7 @@
 package com.home_rental_solution.ms_anfitriones.controller;
 
+import com.home_rental_solution.ms_anfitriones.dto.AnfitrionesRequestDTO;
+import com.home_rental_solution.ms_anfitriones.dto.AnfitrionesResponseDTO;
 import com.home_rental_solution.ms_anfitriones.model.Anfitriones;
 import com.home_rental_solution.ms_anfitriones.service.AnfitrionesService;
 import jakarta.validation.Valid;
@@ -24,94 +26,52 @@ public class AnfitrionesController {
     //***CRUD***
     //GET /api/v1/anfitriones
     @GetMapping
-    public ResponseEntity<List<Anfitriones>> getAnfitriones(){
+    public ResponseEntity<List<AnfitrionesResponseDTO>> getAnfitriones(){
         return ResponseEntity.ok(anfitrionesService.mostrarAnfitriones());
     }
 
     //GET /api/v1/anfitriones/id
     @GetMapping("{idAnfitrion}")
-    public ResponseEntity<?> getPorId(@PathVariable int idAnfitrion){
-        Anfitriones anfitrion = anfitrionesService.mostrarPorId(idAnfitrion);
-        if (anfitrion == null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El anfitrion con ID: " + idAnfitrion + " no existe");
-        }
-        return ResponseEntity.ok(anfitrion);
+    public ResponseEntity<AnfitrionesResponseDTO> getPorId(@PathVariable int idAnfitrion){
+        return ResponseEntity.ok(anfitrionesService.mostrarPorId(idAnfitrion));
     }
 
     // POST /api/v1/anfitriones
     @PostMapping
-    public ResponseEntity<?> postAnfitrion(@Valid @RequestBody Anfitriones nuevoAnfitrion){
-        try{
-            Anfitriones anfitrionGuardado = anfitrionesService.save(nuevoAnfitrion);
-            return ResponseEntity.status(HttpStatus.CREATED).body(anfitrionGuardado);
-        } catch(Exception e){
-            return ResponseEntity.badRequest().body(e.getMessage());
+    public ResponseEntity<AnfitrionesResponseDTO> postAnfitrion(@Valid @RequestBody AnfitrionesRequestDTO dto){
+            return ResponseEntity.status(HttpStatus.CREATED).body(anfitrionesService.save(dto));
         }
-    }
 
     //PUT /api/v1/anfitriones/id
     @PutMapping("{idAnfitrion}")
-    public ResponseEntity<?> putAnfitrion(@PathVariable int idAnfitrion, @Valid @RequestBody Anfitriones anfitrionEditado){
-        try{
-            Anfitriones anfitrionActualizado = anfitrionesService.editar(idAnfitrion, anfitrionEditado);
-            return ResponseEntity.ok(anfitrionActualizado);
-        } catch (Exception e){
-            String msg = e.getMessage();
-            if (msg != null && msg.contains("email")){
-                return ResponseEntity.badRequest().body(msg);
-            }
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(msg);
+    public ResponseEntity<AnfitrionesResponseDTO> putAnfitrion(@PathVariable int idAnfitrion, @Valid @RequestBody
+    AnfitrionesRequestDTO dto){
+            return ResponseEntity.ok(anfitrionesService.editar(idAnfitrion, dto));
         }
-    }
 
     //DELETE /api/v1/anfitriones/id
     @DeleteMapping("{idAnfitrion}")
-    public ResponseEntity<?> deleteAnfitrion(@PathVariable int idAnfitrion){
-        try{
-            anfitrionesService.borrar(idAnfitrion);
+    public ResponseEntity<Void> deleteAnfitrion(@PathVariable int idAnfitrion){
+        anfitrionesService.borrar(idAnfitrion);
             return ResponseEntity.noContent().build();
-        } catch (Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
     }
 
     //***EXTRAS***
     //GET /api/v1/anfitriones/id/validar
     @GetMapping("{idAnfitrion}/validar")
-    public ResponseEntity<?> validar(@PathVariable int idAnfitrion){
-        try{
-            boolean habilitado = anfitrionesService.validar(idAnfitrion);
-            return ResponseEntity.ok(habilitado);
-        } catch (Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+    public ResponseEntity<Boolean> validar(@PathVariable int idAnfitrion){
+        return ResponseEntity.ok(anfitrionesService.validar(idAnfitrion));
     }
 
     //PUT /api/v1/anfitriones/id/verificar
     @PutMapping("{idAnfitrion}/verificar")
-    public ResponseEntity<?> verificar(@PathVariable int idAnfitrion){
-        try{
-            Anfitriones anfitrion = anfitrionesService.verificar(idAnfitrion);
-            return ResponseEntity.ok(anfitrion);
-        } catch (Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+    public ResponseEntity<AnfitrionesResponseDTO> verificar(@PathVariable int idAnfitrion){
+        return ResponseEntity.ok(anfitrionesService.verificar(idAnfitrion));
     }
 
     //GET /api/v1/anfitriones/id/propiedades
     @GetMapping("{idAnfitrion}/propiedades")
     public ResponseEntity<?> getPropiedades(@PathVariable int idAnfitrion){
         return ResponseEntity.ok("Endpoint pendiente de integracion con ms-propiedades");
-    }
-
-    //Manejo de errores de validacion
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String, String> manejarErroresValidacion(MethodArgumentNotValidException ex){
-        Map<String, String> errores = new HashMap<>();
-        for (FieldError error : ex.getBindingResult().getFieldErrors()){
-            errores.put(error.getField(), error.getDefaultMessage());
-        }
-        return errores;
     }
 }
