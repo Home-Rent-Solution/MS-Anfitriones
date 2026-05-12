@@ -2,19 +2,14 @@ package com.home_rental_solution.ms_anfitriones.controller;
 
 import com.home_rental_solution.ms_anfitriones.dto.AnfitrionesRequestDTO;
 import com.home_rental_solution.ms_anfitriones.dto.AnfitrionesResponseDTO;
-import com.home_rental_solution.ms_anfitriones.model.Anfitriones;
 import com.home_rental_solution.ms_anfitriones.service.AnfitrionesService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
 
 @RestController
 @RequestMapping("/api/v1/anfitriones")
