@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "anfitriones")
 public class Anfitriones {
-
+//se quitan anotaciones como @NotNull
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idAnfitrion;
