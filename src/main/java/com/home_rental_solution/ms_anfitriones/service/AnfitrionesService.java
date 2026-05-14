@@ -1,21 +1,29 @@
 package com.home_rental_solution.ms_anfitriones.service;
 
+import com.home_rental_solution.ms_anfitriones.client.PropiedadClient;
 import com.home_rental_solution.ms_anfitriones.dto.AnfitrionesRequestDTO;
 import com.home_rental_solution.ms_anfitriones.dto.AnfitrionesResponseDTO;
 import com.home_rental_solution.ms_anfitriones.model.Anfitriones;
 import com.home_rental_solution.ms_anfitriones.repository.AnfitrionesRepository;
+import feign.FeignException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AnfitrionesService {
 
     private final AnfitrionesRepository anfitrionesRepository;
+
+    @Autowired
+    private final PropiedadClient propiedadClient;
 
     //Mapeo: Entidad -> ResponseDTO
     private AnfitrionesResponseDTO mapToDTO(Anfitriones anfitrion){
@@ -37,6 +45,19 @@ public class AnfitrionesService {
                 dto.getTelefono(),
                 false
         );
+    }
+
+    //validacion con feign
+    private List<Object> obtenerPropiedadesAnfitrion(int idAnfitrion){
+        try{
+            List<Object> propiedades = propiedadClient.obtenerPropiedadesPorAnfitrion(idAnfitrion);
+            log.info(">>> Propiedades del anfitrion {} obtenidas correctamente (Feign Client)", idAnfitrion);
+            return propiedades;
+        } catch (FeignException.NotFound e){
+            throw new RuntimeException("No se encontraron propiedades para el anfitrion con ID: " + idAnfitrion);
+        } catch (FeignException e){
+            throw new RuntimeException("No se puede conectar con ms-propiedades: " + e.getMessage());
+        }
     }
 
     //***CRUD***
@@ -98,5 +119,13 @@ public class AnfitrionesService {
                 "anfitrion con ID: " + idAnfitrion + " no existe"));
         anfitrion.setVerificado(true);
         return mapToDTO(anfitrionesRepository.save(anfitrion));
+    }
+
+    //GET /anfitriones/id/propiedades
+    public List<Object> obtenerPropiedades(int idAnfitrion){
+        if (!anfitrionesRepository.existsById(idAnfitrion)){
+            throw new RuntimeException("El anfitrion con ID: " + idAnfitrion + " no existe");
+        }
+        return obtenerPropiedadesAnfitrion(idAnfitrion);
     }
 }

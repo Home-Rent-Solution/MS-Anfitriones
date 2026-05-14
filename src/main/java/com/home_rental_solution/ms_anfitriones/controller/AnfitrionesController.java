@@ -66,7 +66,7 @@ public class AnfitrionesController {
 
     //GET /api/v1/anfitriones/id/propiedades
     @GetMapping("{idAnfitrion}/propiedades")
-    public ResponseEntity<?> getPropiedades(@PathVariable int idAnfitrion){
-        return ResponseEntity.ok("Endpoint pendiente de integracion con ms-propiedades");
+    public ResponseEntity<List<Object>> getPropiedades(@PathVariable int idAnfitrion){
+        return ResponseEntity.ok(anfitrionesService.obtenerPropiedades(idAnfitrion));
     }
 }
