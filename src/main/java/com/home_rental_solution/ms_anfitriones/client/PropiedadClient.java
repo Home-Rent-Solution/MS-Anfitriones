@@ -12,5 +12,5 @@ public interface PropiedadClient {
     //GET /propiedades/anfitrion/id
     //obtener propiedades de un anfitrion
     @GetMapping("/api/v1/propiedades/anfitrion/{idAnfitrion}")
-    List<Object> obtenerPropiedadesPorAnfitrion(@PathVariable int idAnfitrion);
+    List<Object> obtenerPropiedadesPorAnfitrion(@PathVariable Long idAnfitrion);
 }

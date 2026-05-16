@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AnfitrionesResponseDTO {
 
-    private Integer isAnfitrion;
+    private Long idAnfitrion;
     private String nombre;
     private String email;
     private String telefono;

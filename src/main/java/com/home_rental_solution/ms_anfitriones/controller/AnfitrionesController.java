@@ -27,7 +27,7 @@ public class AnfitrionesController {
 
     //GET /api/v1/anfitriones/id
     @GetMapping("{idAnfitrion}")
-    public ResponseEntity<AnfitrionesResponseDTO> getPorId(@PathVariable int idAnfitrion){
+    public ResponseEntity<AnfitrionesResponseDTO> getPorId(@PathVariable Long idAnfitrion){
         return ResponseEntity.ok(anfitrionesService.mostrarPorId(idAnfitrion));
     }
 
@@ -39,14 +39,14 @@ public class AnfitrionesController {
 
     //PUT /api/v1/anfitriones/id
     @PutMapping("{idAnfitrion}")
-    public ResponseEntity<AnfitrionesResponseDTO> putAnfitrion(@PathVariable int idAnfitrion, @Valid @RequestBody
+    public ResponseEntity<AnfitrionesResponseDTO> putAnfitrion(@PathVariable Long idAnfitrion, @Valid @RequestBody
     AnfitrionesRequestDTO dto){
             return ResponseEntity.ok(anfitrionesService.editar(idAnfitrion, dto));
         }
 
     //DELETE /api/v1/anfitriones/id
     @DeleteMapping("{idAnfitrion}")
-    public ResponseEntity<Void> deleteAnfitrion(@PathVariable int idAnfitrion){
+    public ResponseEntity<Void> deleteAnfitrion(@PathVariable Long idAnfitrion){
         anfitrionesService.borrar(idAnfitrion);
             return ResponseEntity.noContent().build();
     }
@@ -54,19 +54,19 @@ public class AnfitrionesController {
     //***EXTRAS***
     //GET /api/v1/anfitriones/id/validar
     @GetMapping("{idAnfitrion}/validar")
-    public ResponseEntity<Boolean> validar(@PathVariable int idAnfitrion){
+    public ResponseEntity<Boolean> validar(@PathVariable Long idAnfitrion){
         return ResponseEntity.ok(anfitrionesService.validar(idAnfitrion));
     }
 
     //PUT /api/v1/anfitriones/id/verificar
     @PutMapping("{idAnfitrion}/verificar")
-    public ResponseEntity<AnfitrionesResponseDTO> verificar(@PathVariable int idAnfitrion){
+    public ResponseEntity<AnfitrionesResponseDTO> verificar(@PathVariable Long idAnfitrion){
         return ResponseEntity.ok(anfitrionesService.verificar(idAnfitrion));
     }
 
     //GET /api/v1/anfitriones/id/propiedades
     @GetMapping("{idAnfitrion}/propiedades")
-    public ResponseEntity<List<Object>> getPropiedades(@PathVariable int idAnfitrion){
+    public ResponseEntity<List<Object>> getPropiedades(@PathVariable Long idAnfitrion){
         return ResponseEntity.ok(anfitrionesService.obtenerPropiedades(idAnfitrion));
     }
 }

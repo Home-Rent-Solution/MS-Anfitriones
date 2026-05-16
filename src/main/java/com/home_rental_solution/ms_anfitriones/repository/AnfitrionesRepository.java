@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface AnfitrionesRepository extends JpaRepository<Anfitriones, Integer> {
+public interface AnfitrionesRepository extends JpaRepository<Anfitriones, Long> {
 
     //***EXTRAS***
     //buscar por email
@@ -21,7 +21,7 @@ public interface AnfitrionesRepository extends JpaRepository<Anfitriones, Intege
     boolean existsByEmailIgnoreCase(String email);
 
     //validar si esta verificado
-    boolean existsByIdAnfitrionAndVerificadoTrue(Integer idAnfitrion);
+    boolean existsByIdAnfitrionAndVerificadoTrue(Long idAnfitrion);
 
     //Listar por estado de verificacion
     @Query("SELECT a FROM Anfitriones a WHERE a.verificado = true ORDER BY a.nombre")

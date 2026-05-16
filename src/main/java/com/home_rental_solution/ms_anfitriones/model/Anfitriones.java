@@ -14,7 +14,7 @@ public class Anfitriones {
 //se quitan anotaciones como @NotNull
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idAnfitrion;
+    private Long idAnfitrion;
 
     @Column(nullable = false, length = 120)
     private String nombre;

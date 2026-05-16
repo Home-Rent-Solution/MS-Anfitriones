@@ -48,7 +48,7 @@ public class AnfitrionesService {
     }
 
     //validacion con feign
-    private List<Object> obtenerPropiedadesAnfitrion(int idAnfitrion){
+    private List<Object> obtenerPropiedadesAnfitrion(Long idAnfitrion){
         try{
             List<Object> propiedades = propiedadClient.obtenerPropiedadesPorAnfitrion(idAnfitrion);
             log.info(">>> Propiedades del anfitrion {} obtenidas correctamente (Feign Client)", idAnfitrion);
@@ -67,7 +67,7 @@ public class AnfitrionesService {
     }
 
     //GET /anfitriones/id
-    public AnfitrionesResponseDTO mostrarPorId(int idAnfitrion){
+    public AnfitrionesResponseDTO mostrarPorId(Long idAnfitrion){
         Anfitriones anfitrion = anfitrionesRepository.findById(idAnfitrion).orElseThrow(() -> new RuntimeException("El " +
                 "anfitrion con ID: " + idAnfitrion + " no existe"));
         return mapToDTO(anfitrion);
@@ -82,7 +82,7 @@ public class AnfitrionesService {
     }
 
     //PUT /anfitriones/id
-    public AnfitrionesResponseDTO editar(int idAnfitrion, AnfitrionesRequestDTO dto){
+    public AnfitrionesResponseDTO editar(Long idAnfitrion, AnfitrionesRequestDTO dto){
         Anfitriones anfitrionExistente = anfitrionesRepository.findById(idAnfitrion).orElseThrow(() -> new RuntimeException(
                 "El Anfitrion con ID: " + idAnfitrion + " no existe"
         ));
@@ -97,7 +97,7 @@ public class AnfitrionesService {
     }
 
     //DELETE /anfitriones/id
-    public void borrar(int idAnfitrion){
+    public void borrar(Long idAnfitrion){
         if (!anfitrionesRepository.existsById(idAnfitrion)){
             throw new RuntimeException("El anfitrion con ID: " + idAnfitrion + " no existe");
         }
@@ -106,7 +106,7 @@ public class AnfitrionesService {
 
     //***EXTRAS***
     //GET /anfitriones/id/validar
-    public boolean validar(int idAnfitrion){
+    public boolean validar(Long idAnfitrion){
         if (!anfitrionesRepository.existsById(idAnfitrion)){
             throw new RuntimeException("El anfitrion con ID: " + idAnfitrion + " no existe");
         }
@@ -114,7 +114,7 @@ public class AnfitrionesService {
     }
 
     //PUT /anfitriones/id/verificar
-    public AnfitrionesResponseDTO verificar(int idAnfitrion){
+    public AnfitrionesResponseDTO verificar(Long idAnfitrion){
         Anfitriones anfitrion = anfitrionesRepository.findById(idAnfitrion).orElseThrow(() -> new RuntimeException("El " +
                 "anfitrion con ID: " + idAnfitrion + " no existe"));
         anfitrion.setVerificado(true);
@@ -122,7 +122,7 @@ public class AnfitrionesService {
     }
 
     //GET /anfitriones/id/propiedades
-    public List<Object> obtenerPropiedades(int idAnfitrion){
+    public List<Object> obtenerPropiedades(Long idAnfitrion){
         if (!anfitrionesRepository.existsById(idAnfitrion)){
             throw new RuntimeException("El anfitrion con ID: " + idAnfitrion + " no existe");
         }
