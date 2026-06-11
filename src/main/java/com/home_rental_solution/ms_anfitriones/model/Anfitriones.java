@@ -16,13 +16,23 @@ public class Anfitriones {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idAnfitrion;
 
-    @Column(nullable = false, length = 120)
+    @Column(
+            nullable = false,
+            length = 120
+    )
     private String nombre;
 
-    @Column(nullable = false, unique = true, length = 150)
+    @Column(
+            nullable = false,
+            unique = true,
+            length = 150
+    )
     private String email;
 
-    @Column(nullable = false, length = 20)
+    @Column(
+            nullable = false,
+            length = 20
+    )
     private String telefono;
 
     @Column(nullable = false)

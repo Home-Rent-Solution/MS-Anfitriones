@@ -16,15 +16,24 @@ public class AnfitrionesRequestDTO {
     //verificado no se incluye porque se maneja con put
 
     @NotBlank(message = "El nombre es obligatorio")
-    @Size(max = 120, message = "El nombre no puede superar los 120 caracteres")
+    @Size(
+            max = 120,
+            message = "El nombre no puede superar los 120 caracteres"
+    )
     private  String nombre;
 
     @NotBlank(message = "El email es obligatorio")
     @Email(message = "Debe ingresar un email valido")
-    @Size(max = 150, message = "El email no puede superar los 150 caracteres")
+    @Size(
+            max = 150,
+            message = "El email no puede superar los 150 caracteres"
+    )
     private  String email;
 
     @NotBlank(message = "El telefono es obligatorio")
-    @Size(max = 20, message = "El telefono no puede superar los 20 caracteres")
+    @Size(
+            max = 20,
+            message = "El telefono no puede superar los 20 caracteres"
+    )
     private  String telefono;
 }

@@ -42,6 +42,9 @@ public class DataInitializer implements CommandLineRunner {
                 false
         ));
 
-        log.info(">>> DataInitializer: {} anfitriones insertados correctamente", anfitrionesRepository.count());
+        log.info(
+                ">>> DataInitializer: {} anfitriones insertados correctamente",
+                anfitrionesRepository.count()
+        );
     }
 }

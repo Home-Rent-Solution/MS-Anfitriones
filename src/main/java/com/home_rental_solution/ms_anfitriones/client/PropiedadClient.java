@@ -6,7 +6,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-@FeignClient(name = "ms-propiedades", url = "${ms.propiedades.url}")
+@FeignClient(
+        name = "ms-propiedades",
+        url = "${ms.propiedades.url}"
+)
 public interface PropiedadClient {
 
     //GET /propiedades/anfitrion/id

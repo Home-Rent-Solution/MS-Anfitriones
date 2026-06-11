@@ -10,9 +10,11 @@ public class SwaggerConfig {
 
     @Bean
     public OpenAPI customOpenAPI(){
-        return new OpenAPI().info(new Info()
+        return new OpenAPI()
+                .info(new Info()
                 .title("API ANFITRIONES")
                 .version("1.0")
-                .description("Documentación de la API para la gestión de los Anfitriones"));
+                .description("Documentación de la API para la gestión de los Anfitriones")
+        );
     }
 }
