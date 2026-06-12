@@ -129,7 +129,7 @@ public class AnfitrionesService {
         Anfitriones anfitrion = anfitrionesRepository
                 .findById(idAnfitrion)
                 .orElseThrow(() -> new RuntimeException("El anfitrion con ID: " + idAnfitrion + " no existe"));
-        anfitrion.setVerificado(true);
+        anfitrion.setVerificado(!anfitrion.isVerificado());
         return mapToDTO(anfitrionesRepository.save(anfitrion));
     }
 
