@@ -1,4 +1,4 @@
-package com.home_rental_solution.ms_anfitriones;
+package com.home_rental_solution.ms_anfitriones.util;
 
 import com.home_rental_solution.ms_anfitriones.model.Anfitriones;
 import com.home_rental_solution.ms_anfitriones.repository.AnfitrionesRepository;
