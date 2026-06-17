@@ -146,7 +146,12 @@ public class AnfitrionesControllerTest {
     public void testGetPropiedades() throws Exception {
         // Simulamos la lista de objetos de retorno que provee ms-propiedades
         List<Object> propiedadesSimuladas = List.of(
-                Map.of("id", 101, "titulo", "Departamento Centro")
+                Map.of(
+                        "id",
+                        101,
+                        "titulo",
+                        "Departamento Centro"
+                )
         );
 
         when(anfitrionesService.obtenerPropiedades(1L)).thenReturn(propiedadesSimuladas);
