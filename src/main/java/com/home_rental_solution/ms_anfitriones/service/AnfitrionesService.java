@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 public class AnfitrionesService {
 
     private final AnfitrionesRepository anfitrionesRepository;
-
     private final PropiedadClient propiedadClient;
 
     //Mapeo: Entidad -> ResponseDTO

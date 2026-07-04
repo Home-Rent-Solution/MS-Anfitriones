@@ -18,7 +18,6 @@ import java.util.Random;
 @Slf4j
 public class DataLoader implements CommandLineRunner {
 
-    @Autowired
     private final AnfitrionesRepository anfitrionesRepository;
 
     @Override
