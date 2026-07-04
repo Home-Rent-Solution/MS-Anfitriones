@@ -22,7 +22,6 @@ public class AnfitrionesService {
 
     private final AnfitrionesRepository anfitrionesRepository;
 
-    @Autowired
     private final PropiedadClient propiedadClient;
 
     //Mapeo: Entidad -> ResponseDTO
