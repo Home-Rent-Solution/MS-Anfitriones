@@ -37,7 +37,7 @@ public class AnfitrionesService {
         );
     }
 
-    //Mapeo: RequestDTO -> Entidad
+    //Mapeo: RequestDTO --> Entidad
     private Anfitriones mapToEntity(AnfitrionesRequestDTO dto){
         return new Anfitriones(
                 null,
