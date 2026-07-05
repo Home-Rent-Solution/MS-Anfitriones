@@ -12,7 +12,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,16 +21,19 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/anfitriones")
-@RequiredArgsConstructor
 @Tag(
         name = "Anfitriones",
         description = "Controlador principal para la gestión, registro y verificaciones de seguridad de los" +
                 " anfitriones del sistema"
 )
 public class AnfitrionesController {
+    private final AnfitrionesService anfitrionesService;
+
 
     @Autowired
-    private final AnfitrionesService anfitrionesService;
+    public AnfitrionesController(AnfitrionesService anfitrionesService) {
+        this.anfitrionesService = anfitrionesService;
+    }
 
     //***CRUD***
     //GET /api/v1/anfitriones

@@ -2,7 +2,6 @@ package com.home_rental_solution.ms_anfitriones.util;
 
 import com.home_rental_solution.ms_anfitriones.model.Anfitriones;
 import com.home_rental_solution.ms_anfitriones.repository.AnfitrionesRepository;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.datafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +13,16 @@ import java.util.Random;
 
 @Profile({"dev", "test"})
 @Component
-@RequiredArgsConstructor
 @Slf4j
 public class DataLoader implements CommandLineRunner {
 
     private final AnfitrionesRepository anfitrionesRepository;
+
+
+    @Autowired
+    public DataLoader(AnfitrionesRepository anfitrionesRepository) {
+        this.anfitrionesRepository = anfitrionesRepository;
+    }
 
     @Override
     public void run (String... args) throws Exception {

@@ -2,17 +2,22 @@ package com.home_rental_solution.ms_anfitriones.config;
 
 import com.home_rental_solution.ms_anfitriones.model.Anfitriones;
 import com.home_rental_solution.ms_anfitriones.repository.AnfitrionesRepository;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Slf4j
 @Component
-@RequiredArgsConstructor
 public class DataInitializer implements CommandLineRunner {
 
     private final AnfitrionesRepository anfitrionesRepository;
+
+
+    @Autowired
+    public DataInitializer(AnfitrionesRepository anfitrionesRepository) {
+        this.anfitrionesRepository = anfitrionesRepository;
+    }
 
     @Override
     public void run (String...args){
