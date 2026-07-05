@@ -20,7 +20,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AnfitrionesService {
 
+    @Autowired
     private final AnfitrionesRepository anfitrionesRepository;
+
+    @Autowired
     private final PropiedadClient propiedadClient;
 
     //Mapeo: Entidad -> ResponseDTO
