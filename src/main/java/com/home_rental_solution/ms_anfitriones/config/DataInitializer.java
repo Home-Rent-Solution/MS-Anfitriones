@@ -30,7 +30,7 @@ public class DataInitializer implements CommandLineRunner {
         anfitrionesRepository.save(new Anfitriones(
                 null,
                 "Victor Urra",
-                "victor.urra@email.com",
+                "anfitrion@duoc.cl",
                 "123456789",
                 true
         ));anfitrionesRepository.save(new Anfitriones(

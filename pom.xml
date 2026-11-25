@@ -27,6 +27,7 @@
 	</scm>
 	<properties>
 		<java.version>25</java.version>
+		<byte-buddy.version>1.17.7</byte-buddy.version>
 		<spring-cloud.version>2024.0.1</spring-cloud.version>
 	</properties>
 	<dependencies>
